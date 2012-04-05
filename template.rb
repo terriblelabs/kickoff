@@ -40,7 +40,7 @@ end
 
 gem_group :development, :test do
   gem "rspec-rails"
-  # gem 'ruby-debug19', :require => 'ruby-debug'
+  gem "debugger"
 end
 
 gem_group :development do
