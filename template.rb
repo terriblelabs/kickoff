@@ -25,6 +25,7 @@ gem "jquery-rails"
 gem "kramdown"
 gem "simple_form"
 gem "stamp"
+gem "unicorn"
 
 gem_group :assets do
   gem "sass-rails", :version => "~> 3.2.3"
@@ -44,7 +45,6 @@ gem_group :development, :test do
 end
 
 gem_group :development do
-  gem "thin"
   gem "foreman"
   gem "heroku"
 
@@ -162,7 +162,15 @@ CODE
 
 
 create_file "Procfile", <<-CODE
-web: bundle exec thin start -p $PORT -e $RACK_ENV
+web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+CODE
+
+
+# configure unicorn to run 3 workers for single-dyno concurrency
+# http://michaelvanrooijen.com/articles/2011/06/01-more-concurrency-on-a-single-heroku-dyno-with-the-new-celadon-cedar-stack/
+create_file "config/unicorn.rb", <<-CODE
+worker_processes 3 # number of unicorn workers to spin up
+timeout 30         # restarts workers that hang for 30 seconds
 CODE
 
 
