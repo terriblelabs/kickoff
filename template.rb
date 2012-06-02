@@ -156,7 +156,7 @@ CODE
 
 create_file "app/views/shared/_flashes.html.haml", <<-CODE
 - flash.each do |key, message|
-  %p{ :class => key }= message
+  %p.alert{ :class => key }= message
 CODE
 
 
