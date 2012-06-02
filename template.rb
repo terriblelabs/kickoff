@@ -59,9 +59,6 @@ gem_group :test do
   gem "database_cleaner"
 end
 
-
-run "bundle install --binstubs=./bundler_stubs"
-
 # configure newrelic for heroku
 get "https://raw.github.com/gist/2253296/newrelic.yml", "config/newrelic.yml"
 
