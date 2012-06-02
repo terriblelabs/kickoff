@@ -188,7 +188,7 @@ CODE
 
 insert_into_file "app/helpers/application_helper.rb", :after => "module ApplicationHelper\n" do
 <<-CODE
-  # Used to render controller and action as CSS classes on the body element.
+  # Renders controller and action as CSS classes on the body element.
   def body_attributes
     {
       :class => [controller.controller_name, controller.action_name].join(' ')
