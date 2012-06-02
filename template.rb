@@ -32,9 +32,7 @@ gem_group :assets do
   gem "coffee-rails", :version => "~> 3.2.1"
   gem "uglifier", :version => ">= 1.0.3"
 
-  gem "bootstrap-sass-rails",
-      :git => 'git://github.com/yabawock/bootstrap-sass-rails.git',
-      :branch => 'develop'
+  gem "bootstrap-sass"
   gem 'haml-rails'
   gem 'modernizr-rails'
 end
@@ -128,8 +126,12 @@ CODE
 
 
 create_file "app/assets/stylesheets/screen.css.sass", <<-CODE
-@import "twitter/bootstrap"
-@import "twitter/bootstrap/responsive"
+@import "bootstrap"
+
+body
+  padding-top: 80px
+
+@import "bootstrap/responsive"
 CODE
 
 
@@ -176,14 +178,13 @@ CODE
 
 # add js assets
 append_to_file "app/assets/javascripts/application.js", <<-CODE
-//= require twitter/bootstrap
+//= require bootstrap
 //= require modernizr
 CODE
 
 
 # add css assets
 append_to_file "app/assets/stylesheets/application.css", <<-CODE
-*= require twitter/bootstrap
 *= require screen
 CODE
 
