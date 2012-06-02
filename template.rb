@@ -180,10 +180,8 @@ append_to_file "app/assets/javascripts/application.js", <<-CODE
 CODE
 
 
-# add css assets
-append_to_file "app/assets/stylesheets/application.css", <<-CODE
-*= require screen
-CODE
+# require css assets explicitly instead of `require_tree`
+gsub_file "app/assets/stylesheets/application.css", /require_tree \.$/, 'require screen'
 
 
 insert_into_file "app/helpers/application_helper.rb", :after => "module ApplicationHelper\n" do
