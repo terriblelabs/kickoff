@@ -1,6 +1,7 @@
 # It's kickoff time!
 
-Our terribly awesome template generates a Rails app featuring some of our favorite tools for building web apps.
+Our terribly awesome template generates a Rails app featuring some of [our](http://www.terriblelabs.com/team)
+favorite tools for building web apps.
 
 ## Usage
 
@@ -14,12 +15,21 @@ Our terribly awesome template generates a Rails app featuring some of our favori
 * Twitter Bootstrap
 * Modernizr
 * Haml
-* Kramdown, a markdown parser, because [Haml Sucks for Content](http://chriseppstein.github.com/blog/2010/02/08/haml-sucks-for-content/)
+* Redcarpet, a markdown parser, because [Haml Sucks for Content](http://chriseppstein.github.com/blog/2010/02/08/haml-sucks-for-content/)
+* Stamp for formatting dates and times
+* Unicorn web server
+* Airbrake
+
+Development tools:
+
+* Better Errors + binding_of_caller
+* debugger
+* Foreman
+* Letter Opener
 
 Testing tools:
 
 * RSpec
-* Cucumber
 * Guard
 * FactoryGirl
 * ffaker
@@ -33,4 +43,4 @@ And for production:
 
 ## Copyright
 
-Copyright (c) 2012 [Terrible Labs](http://terriblelabs.com).
+Copyright (c) 2012 [Terrible Labs, Inc.](http://www.terriblelabs.com)
