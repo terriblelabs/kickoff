@@ -52,6 +52,7 @@ end
 
 gem_group :test do
   gem 'capybara'
+  gem 'connection_pool'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'ffaker'
@@ -201,6 +202,30 @@ insert_into_file 'app/controllers/application_controller.rb', before: /^end$/ do
 CODE
 end
 
+create_file 'spec/shared/shared_connection', <<-CODE
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+
+  def self.connection
+    @@shared_connection || ConnectionPool::Wrapper.new(:size => 1) { retrieve_connection }
+  end
+end
+
+module SharedConnection
+  def self.share!
+    ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+  end
+end
+
+RSpec.configure do |config|
+  config.before do
+    if example.metadata[:js]
+      SharedConnection.share!
+    end
+  end
+end
+CODE
 
 rake 'db:migrate'
 rake 'db:seed'
