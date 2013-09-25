@@ -18,33 +18,29 @@ if yes?('Do you want to use Devise?')
   options[:user_password] = ask_with_default 'Password', 'password'
 end
 
+add_source 'https://rubygems.org'
 
 gem 'airbrake'
 gem 'devise' if options[:devise_model]
-gem 'haml', :version => '3.2.0.rc.4'
+gem 'haml'
 gem 'jquery-rails'
 gem 'newrelic_rpm'
 gem 'pg'
 gem 'redcarpet'
 gem 'simple_form'
 gem 'stamp'
-gem 'strong_parameters'
-gem 'unicorn'
 
-gem_group :assets do
-  gem 'sass-rails', :version => '~> 3.2.3'
-  gem 'coffee-rails', :version => '~> 3.2.1'
-  gem 'uglifier', :version => '>= 1.0.3'
+gem 'sass-rails', '~> 4.0.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
 
-  gem 'bootstrap-sass'
-  gem 'modernizr-rails'
-end
+gem 'zurb-foundation'
 
 gem_group :development, :test do
   gem 'debugger'
   gem 'quiet_assets'
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', :require => false
+  gem 'rb-inotify', require: false
+  gem 'rb-fsevent', require: false
   gem 'rspec-rails'
 end
 
@@ -67,11 +63,13 @@ gem_group :test do
 end
 
 # configure newrelic for heroku
-get 'https://raw.github.com/gist/2253296/newrelic.yml', 'config/newrelic.yml'
+# TODO: this link is borked
+# get 'https://raw.github.com/gist/2253296/newrelic.yml', 'config/newrelic.yml'
 
 generate 'rspec:install'
-generate 'simple_form:install', '--bootstrap'
-
+remove_file 'app/views/layouts/application.html.erb'
+generate 'foundation:install'
+generate 'simple_form:install', '--foundation'
 
 if options[:devise_model]
   generate 'devise:install'
@@ -81,8 +79,8 @@ if options[:devise_model]
   # create seed user
   append_to_file 'db/seeds.rb', <<-CODE
 #{options[:devise_model]}.create!(
-  :email => %q{#{options[:user_email]}},
-  :password => %q{#{options[:user_password]}}) unless #{options[:devise_model]}.any?
+  email: %q{#{options[:user_email]}},
+  password: %q{#{options[:user_password]}}) unless #{options[:devise_model]}.any?
 CODE
 
   # create factory for user model
@@ -117,12 +115,12 @@ CODE
 create_file 'config/initializers/mail.rb', <<-CODE
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address        => 'smtp.sendgrid.net',
-  :port           => '587',
-  :authentication => :plain,
-  :user_name      => ENV['SENDGRID_USERNAME'],
-  :password       => ENV['SENDGRID_PASSWORD'],
-  :domain         => 'heroku.com'
+  address: 'smtp.sendgrid.net',
+  port: '587',
+  authentication: :plain,
+  user_name: ENV['SENDGRID_USERNAME'],
+  password: ENV['SENDGRID_PASSWORD'],
+  domain: 'heroku.com'
 }
 CODE
 
@@ -139,12 +137,7 @@ CODE
 
 
 create_file 'app/assets/stylesheets/screen.css.sass', <<-CODE
-@import 'bootstrap'
-
-body
-  padding-top: 80px
-
-@import 'bootstrap/responsive'
+@import "foundation_and_overrides"
 CODE
 
 
@@ -161,6 +154,7 @@ create_file 'app/views/layouts/application.html.haml', <<-CODE
 
     = stylesheet_link_tag :application
     = javascript_include_tag :application
+    = javascript_include_tag "vendor/custom.modernizr"
 
   %body{ body_attributes }
     = render 'shared/flashes'
@@ -172,68 +166,35 @@ CODE
 
 create_file 'app/views/shared/_flashes.html.haml', <<-CODE
 - flash.each do |key, message|
-  %p.alert{ :class => key }= message
+  %p.alert{ class: key }= message
 CODE
 
-
-create_file 'Procfile', <<-CODE
-web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+append_to_file 'app/assets/stylesheets/application.css', <<-CODE
+/*= require foundation */
 CODE
-
-
-# configure unicorn to run 3 workers for single-dyno concurrency
-# http://michaelvanrooijen.com/articles/2011/06/01-more-concurrency-on-a-single-heroku-dyno-with-the-new-celadon-cedar-stack/
-create_file 'config/unicorn.rb', <<-CODE
-worker_processes 3 # number of unicorn workers to spin up
-timeout 30         # restarts workers that hang for 30 seconds
-preload_app true
-
-before_fork do |server, worker|
-
-  Signal.trap 'TERM' do
-    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
-    Process.kill 'QUIT', Process.pid
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
-end
-
-after_fork do |server, worker|
-
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
-end
-CODE
-
 
 # add js assets
 append_to_file 'app/assets/javascripts/application.js', <<-CODE
-//= require bootstrap
-//= require modernizr
+//= require foundation
+$(document).foundation();
 CODE
-
 
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
 
 
-insert_into_file 'app/helpers/application_helper.rb', :after => 'module ApplicationHelper\n' do
+insert_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper\n' do
 <<-CODE
   # Renders controller and action as CSS classes on the body element.
   def body_attributes
     {
-      :class => [controller.controller_name, controller.action_name].join(' ')
+      class: [controller.controller_name, controller.action_name].join(' ')
     }
   end
 CODE
 end
 
-insert_into_file 'app/controllers/application_controller.rb', :before => /^end$/ do
+insert_into_file 'app/controllers/application_controller.rb', before: /^end$/ do
 <<-CODE
   before_filter :set_locale
 
@@ -253,8 +214,8 @@ remove_file 'app/assets/images/rails.png'
 remove_dir 'test'
 
 git :init
-git :add => '.'
-git :commit => %{-m 'Initial commit.\r\nGenerated by https://github.com/terriblelabs/kickoff'}
+git add: '.'
+git commit: %{-m 'Initial commit.\r\nGenerated by https://github.com/terriblelabs/kickoff'}
 
 
 say "Remember to change config.active_record.whitelist_attributes to false if you're going to use strong_parameters.", :yellow
