@@ -18,8 +18,6 @@ if yes?('Do you want to use Devise?')
   options[:user_password] = ask_with_default 'Password', 'password'
 end
 
-add_source 'https://rubygems.org'
-
 gem 'airbrake'
 gem 'devise' if options[:devise_model]
 gem 'haml'
