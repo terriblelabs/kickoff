@@ -23,16 +23,11 @@ add_source 'https://rubygems.org'
 gem 'airbrake'
 gem 'devise' if options[:devise_model]
 gem 'haml'
-gem 'jquery-rails'
 gem 'newrelic_rpm'
 gem 'pg'
 gem 'redcarpet'
 gem 'simple_form'
 gem 'stamp'
-
-gem 'sass-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
 
 gem 'zurb-foundation'
 
