@@ -95,10 +95,6 @@ end
 run 'bundle exec guard init rspec'
 
 
-# for deployment to heroku
-application 'config.assets.initialize_on_precompile = false'
-
-
 # enable simple factory girl syntax (create, build) in rspec and cucumber
 create_file 'spec/support/factory_girl.rb', <<-CODE
 RSpec.configure do |config|
@@ -178,13 +174,7 @@ CODE
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
 
-gsub_file 'config/initializers/secret_token.rb', /= '.*?'/, "= ENV['SECRET_TOKEN'] || Rails.env"
-append_to_file 'config/initializers/secret_token.rb', <<-CODE
-
-if Rails.env.production? && ENV['SECRET_TOKEN'].blank?
-  raise "Please specify a secret token, e.g.: SECRET_TOKEN=\#{SecureRandom.hex(20)}"
-end
-CODE
+gsub_file 'config/initializers/secret_token.rb', /= '.*?'/, %(= ENV['SECRET_TOKEN'] || "#{SecureRandom.hex(20)}")
 
 insert_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper\n' do
 <<-CODE
