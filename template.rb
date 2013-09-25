@@ -31,6 +31,8 @@ gem 'stamp'
 
 gem 'zurb-foundation'
 
+gem 'rails_12factor'
+
 gem_group :development, :test do
   gem 'debugger'
   gem 'quiet_assets'
