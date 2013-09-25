@@ -178,6 +178,13 @@ CODE
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
 
+gsub_file 'config/initializers/secret_token.rb', /= '.*?'/, "= ENV['SECRET_TOKEN'] || Rails.env"
+append_to_file 'config/initializers/secret_token.rb', <<-CODE
+
+if Rails.env.production? && ENV['SECRET_TOKEN'].blank?
+  raise "Please specify a secret token, e.g.: SECRET_TOKEN=\#{SecureRandom.hex(20)}"
+end
+CODE
 
 insert_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper\n' do
 <<-CODE
