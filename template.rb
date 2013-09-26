@@ -80,7 +80,7 @@ if options[:devise_model]
 CODE
 
   # create factory for user model
-  create_file 'spec/factories/#{options[:devise_model].underscore}s.rb', <<-CODE
+  create_file "spec/factories/#{options[:devise_model].underscore}s.rb", <<-CODE
 FactoryGirl.define do
   factory :#{options[:devise_model].underscore} do
     email      { Faker::Internet.disposable_email }
