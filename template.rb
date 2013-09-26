@@ -45,6 +45,7 @@ gem_group :development do
   gem 'foreman'
   gem 'letter_opener'
   gem 'guard-rspec'
+  gem 'pry-rails'
   gem 'haml-rails'
 end
 
