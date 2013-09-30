@@ -29,7 +29,9 @@ gem 'stamp'
 
 gem 'zurb-foundation'
 
-gem 'rails_12factor'
+gem_group :production do
+  gem 'rails_12factor'
+end
 
 gem_group :development, :test do
   gem 'debugger'
