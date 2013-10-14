@@ -164,16 +164,6 @@ create_file 'app/views/shared/_flashes.html.haml', <<-CODE
   %p.alert{ class: key }= message
 CODE
 
-append_to_file 'app/assets/stylesheets/application.css', <<-CODE
-/*= require foundation */
-CODE
-
-# add js assets
-append_to_file 'app/assets/javascripts/application.js', <<-CODE
-//= require foundation
-$(document).foundation();
-CODE
-
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
 
