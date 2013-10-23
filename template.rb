@@ -190,7 +190,7 @@ insert_into_file 'app/controllers/application_controller.rb', before: /^end$/ do
 CODE
 end
 
-create_file 'spec/shared/shared_connection', <<-CODE
+create_file 'spec/support/shared_connection.rb', <<-CODE
 class ActiveRecord::Base
   mattr_accessor :shared_connection
   @@shared_connection = nil
