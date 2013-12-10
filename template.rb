@@ -53,6 +53,7 @@ end
 
 gem_group :test do
   gem 'capybara'
+  gem 'poltergeist'
   gem 'connection_pool'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
@@ -189,6 +190,17 @@ insert_into_file 'app/controllers/application_controller.rb', before: /^end$/ do
   end
 CODE
 end
+
+create_file 'spec/support/capybara_poltergeist.rb', <<-CODE
+if ENV["TRAVIS"].present?
+  Capybara.default_wait_time = 240
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, timeout: 240)
+  end
+end
+
+Capybara.javascript_driver = :poltergeist
+CODE
 
 create_file 'spec/support/shared_connection.rb', <<-CODE
 class ActiveRecord::Base
