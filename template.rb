@@ -139,6 +139,7 @@ CODE
 
 remove_file 'app/views/layouts/application.html.erb'
 create_file 'app/views/layouts/application.html.haml', <<-CODE
+!!!
 %html.no-js{ lang: 'en' }
   %head
     %title= yield(:title)
