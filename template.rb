@@ -62,8 +62,8 @@ gem_group :test do
 end
 
 # configure newrelic for heroku
-# TODO: this link is borked
-# get 'https://raw.github.com/gist/2253296/newrelic.yml', 'config/newrelic.yml'
+get 'https://gist.github.com/rwdaigle/2253296/raw/newrelic.yml', 'config/newrelic.yml'
+
 
 generate 'rspec:install'
 remove_file 'app/views/layouts/application.html.erb'
