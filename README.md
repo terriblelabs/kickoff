@@ -1,6 +1,6 @@
 # It's kickoff time!
 
-Our terribly awesome template generates a Rails app featuring some of [our](http://www.terriblelabs.com/team)
+Our terribly awesome template generates a Rails 4 app featuring some of [our](http://www.terriblelabs.com/team)
 favorite tools for building web apps.
 
 ## Usage
@@ -15,9 +15,7 @@ favorite tools for building web apps.
 * Modernizr
 * Haml
 * Redcarpet, a markdown parser, because [Haml Sucks for Content](http://chriseppstein.github.com/blog/2010/02/08/haml-sucks-for-content/)
-* Stamp for formatting dates and times
-* Unicorn web server
-* Airbrake
+* [Stamp](https://github.com/jeremyw/stamp) for formatting dates and times
 
 Development tools:
 
@@ -40,6 +38,7 @@ And for production:
 
 * NewRelic
 * SendGrid
+* Airbrake
 
 ## Copyright
 
