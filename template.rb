@@ -95,11 +95,11 @@ CODE
 end
 
 
-# initialize guard for rspec and cucumber
+# initialize guard for rspec
 run 'bundle exec guard init rspec'
 
 
-# enable simple factory girl syntax (create, build) in rspec and cucumber
+# enable simple factory girl syntax (create, build) in rspec
 create_file 'spec/support/factory_girl.rb', <<-CODE
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
