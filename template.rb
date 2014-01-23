@@ -20,14 +20,13 @@ end
 
 gem 'airbrake'
 gem 'devise' if options[:devise_model]
+gem 'foundation-rails'
 gem 'haml'
 gem 'newrelic_rpm'
 gem 'pg'
 gem 'redcarpet'
 gem 'simple_form'
 gem 'stamp'
-
-gem 'zurb-foundation'
 
 gem_group :production do
   gem 'rails_12factor'

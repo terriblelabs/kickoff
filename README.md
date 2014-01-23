@@ -11,8 +11,7 @@ favorite tools for building web apps.
 
 * Devise (optional) with your choice of model name (User, AdminUser, etc.). This template will also create a user with your choice of email and password, and a factory.
 * SimpleForm
-* Compass
-* Zurb foundation
+* Zurb Foundation
 * Modernizr
 * Haml
 * Redcarpet, a markdown parser, because [Haml Sucks for Content](http://chriseppstein.github.com/blog/2010/02/08/haml-sucks-for-content/)
