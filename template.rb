@@ -64,6 +64,7 @@ end
 # configure newrelic for heroku
 get 'https://gist.github.com/rwdaigle/2253296/raw/newrelic.yml', 'config/newrelic.yml'
 
+run 'bundle install'
 
 generate 'rspec:install'
 remove_file 'app/views/layouts/application.html.erb'
