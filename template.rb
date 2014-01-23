@@ -34,7 +34,7 @@ gem_group :production do
 end
 
 gem_group :development, :test do
-  gem 'debugger'
+  gem 'byebug'
   gem 'quiet_assets'
   gem 'rb-inotify', require: false
   gem 'rb-fsevent', require: false

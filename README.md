@@ -23,7 +23,7 @@ favorite tools for building web apps.
 Development tools:
 
 * Better Errors + binding_of_caller
-* debugger
+* byebug debugger for Ruby 2.0
 * Foreman
 * Letter Opener
 * Pry-rails
