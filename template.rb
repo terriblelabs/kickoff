@@ -149,12 +149,12 @@ create_file 'app/views/layouts/application.html.haml', <<-CODE
 
     = stylesheet_link_tag :application
     = javascript_include_tag :application
-    = javascript_include_tag "vendor/custom.modernizr"
+    = javascript_include_tag "vendor/modernizr"
 
   %body{ body_attributes }
     = render 'shared/flashes'
 
-    .container-fluid
+    %main
       = yield
 CODE
 
