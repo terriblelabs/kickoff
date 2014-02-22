@@ -58,7 +58,6 @@ gem_group :test do
   gem 'factory_girl_rails'
   gem 'ffaker'
   gem 'shoulda-matchers'
-  gem 'valid_attribute'
 end
 
 # configure newrelic for heroku
