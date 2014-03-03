@@ -32,7 +32,6 @@ Testing tools:
 * FactoryGirl
 * ffaker
 * shoulda-matchers
-* valid_attribute
 
 And for production:
 
