@@ -37,7 +37,7 @@ gem_group :development, :test do
   gem 'quiet_assets'
   gem 'rb-inotify', require: false
   gem 'rb-fsevent', require: false
-  gem 'rspec-rails'
+  gem "rspec-rails", '~> 2.14.2'
 end
 
 gem_group :development do
@@ -51,7 +51,7 @@ gem_group :development do
 end
 
 gem_group :test do
-  gem 'capybara'
+  gem "capybara", '~> 2.2.1'
   gem 'poltergeist'
   gem 'connection_pool'
   gem 'database_cleaner'
