@@ -9,6 +9,7 @@ def git_email
   `git config --get user.email`.chomp
 end
 
+
 if yes?('Do you want to use Devise?')
   options[:devise_model] = ask_with_default(
     'What should the user model be called?', 'User').classify
@@ -105,7 +106,6 @@ RSpec.configure do |config|
 end
 CODE
 
-
 # configure sendgrid for heroku
 create_file 'config/initializers/mail.rb', <<-CODE
 ActionMailer::Base.smtp_settings = {
@@ -167,9 +167,14 @@ CODE
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
 
-gsub_file 'config/initializers/secret_token.rb', /= '.*?'/, %(= ENV['SECRET_TOKEN'] || "#{SecureRandom.hex(20)}")
 
-insert_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper\n' do
+insert_into_file 'spec/rails_helper.rb', after: "require 'rspec/rails'\n" do
+<<-CODE
+require 'capybara/rails'
+CODE
+end
+
+insert_into_file 'app/helpers/application_helper.rb', after: "module ApplicationHelper\n" do
 <<-CODE
   # Renders controller and action as CSS classes on the body element.
   def body_attributes
@@ -219,7 +224,7 @@ end
 
 RSpec.configure do |config|
   config.before do
-    if example.metadata[:js]
+    if RSpec.current_example.metadata[:js]
       SharedConnection.share!
     end
   end
