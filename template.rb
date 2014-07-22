@@ -105,7 +105,6 @@ RSpec.configure do |config|
 end
 CODE
 
-
 # configure sendgrid for heroku
 create_file 'config/initializers/mail.rb', <<-CODE
 ActionMailer::Base.smtp_settings = {
@@ -166,8 +165,6 @@ CODE
 
 # require css assets explicitly instead of `require_tree`
 gsub_file 'app/assets/stylesheets/application.css', /require_tree \.$/, 'require screen'
-
-gsub_file 'config/initializers/secret_token.rb', /= '.*?'/, %(= ENV['SECRET_TOKEN'] || "#{SecureRandom.hex(20)}")
 
 insert_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper\n' do
 <<-CODE
